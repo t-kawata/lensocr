@@ -89,7 +89,8 @@ async function cli(args) {
         const coordinates = [[xMin, yMin],[xMax, yMin],[xMax, yMax],[xMin, yMax]]
         result.push({ coordinates, text: seg.text, confidence: 0.98 })
     }
-    console.log(JSON.stringify(result, '', 4))
+    // console.log(JSON.stringify(result, '', 4))
+    console.log(JSON.stringify(result))
     // write cookies to file
     // fs.writeFileSync(
     //     pathToCookies,
