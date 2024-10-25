@@ -12,16 +12,16 @@ async function cli(args) {
         args.splice(args.indexOf('-d'), 1);
     }
 
-    if (args.includes('-c')) {
-        const index = args.indexOf('-c');
-        uuid = args[index + 1];
-        args.splice(index, 2);
-    }
+    // if (args.includes('-c')) {
+    //     const index = args.indexOf('-c');
+    //     uuid = args[index + 1];
+    //     args.splice(index, 2);
+    // }
 
-    if (!uuid) {
-        console.log('UUID by -c option must be set.')
-        return
-    }
+    // if (!uuid) {
+    //     console.log('UUID by -c option must be set.')
+    //     return
+    // }
 
     // check empty arguments at last
     if (!args.length || args.includes('-h') || args.includes('--help')) {
@@ -33,7 +33,7 @@ async function cli(args) {
         console.log('    chrome-lens-ocr --help');
         console.log('ARGS:');
         console.log('    -d         Do not copy text to clipboard');
-        console.log('    -c uuid    Specify UUID for cookies file');
+        // console.log('    -c uuid    Specify UUID for cookies file');
         console.log('    -h, --help Show this message');
         return;
     }
@@ -44,26 +44,26 @@ async function cli(args) {
     // get path to cookies file (should be in the same directory as this script)
     const moduleUrl = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(moduleUrl);
-    const pathToCookies = path.join(__dirname, `${uuid}_cookies.json`);
+    // const pathToCookies = path.join(__dirname, `${uuid}_cookies.json`);
 
     // check file access
-    try {
-        fs.accessSync(pathToCookies, fs.constants.R_OK | fs.constants.W_OK);
-    } catch (error) {
-        if (error.code === 'EACCES') {
-            console.warn(
-                'Cannot write cookie, read/write permission denied in',
-                pathToCookies
-            );
-        }
-    }
+    // try {
+    //     fs.accessSync(pathToCookies, fs.constants.R_OK | fs.constants.W_OK);
+    // } catch (error) {
+    //     if (error.code === 'EACCES') {
+    //         console.warn(
+    //             'Cannot write cookie, read/write permission denied in',
+    //             pathToCookies
+    //         );
+    //     }
+    // }
 
     // read cookies from file
     let cookie;
 
-    if (fs.existsSync(pathToCookies)) {
-        cookie = JSON.parse(fs.readFileSync(pathToCookies, 'utf8'));
-    }
+    // if (fs.existsSync(pathToCookies)) {
+    //     cookie = JSON.parse(fs.readFileSync(pathToCookies, 'utf8'));
+    // }
 
     // create lens instance, with cookie if exists
     const lensOptions = cookie ? { headers: { cookie } } : {};
@@ -91,11 +91,11 @@ async function cli(args) {
     }
     console.log(JSON.stringify(result, '', 4))
     // write cookies to file
-    fs.writeFileSync(
-        pathToCookies,
-        JSON.stringify(lens.cookies, null, 4),
-        { encoding: 'utf8' }
-    );
+    // fs.writeFileSync(
+    //     pathToCookies,
+    //     JSON.stringify(lens.cookies, null, 4),
+    //     { encoding: 'utf8' }
+    // );
     return result;
 }
 
